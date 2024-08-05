@@ -38,6 +38,7 @@ function LoginMentor() {
           setPasswordError( "Terjadi kesalahan pada saat login.");
         }
       } else if (response.token) {
+        localStorage.setItem("token", (response.token));
         document.cookie = `token=${response.token}; path=/;`;
         setTimeout(() => {
           router.push("/dashboard-mentor");
