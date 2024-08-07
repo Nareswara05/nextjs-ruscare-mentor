@@ -45,6 +45,7 @@ const StudentTable = () => {
     { menu: 'Nama' },
     { menu: 'Jurusan' },
     { menu: 'Angkatan' },
+    { menu: 'Tanggal Lahir' },
   ];
 
   const yearStart = [
@@ -125,6 +126,7 @@ const StudentTable = () => {
               <td className="py-2 px-4">{student.name}</td>
               <td className="py-2 px-4">{getMajorName(student.grade_id)}</td>
               <td className="py-2 px-4">{student.year_of_entry}</td>
+              <td className="py-2 px-4">{student.birth_date}</td>
             </tr>
           ))}
         </tbody>
