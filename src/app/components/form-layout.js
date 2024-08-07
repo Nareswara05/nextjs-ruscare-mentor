@@ -76,20 +76,22 @@ function LoginMentor() {
           <div className="mt-4">Masukkan email dan password Anda untuk masuk</div>
         </div>
         <div className="flex flex-col font-montserrat w-full mt-16">
-          <h2 className="text-[#252525] text-sm mb-2">Username</h2>
+          <h2 className="text-gray-800 font-semibold text-md mb-1">Username</h2>
           <input
-            className="w-[95%] border-b border-black focus:outline-none text-textPrimary"
+            className="w-[95%] border-b border-black focus:outline-none text-textPrimary pb-2"
             type="text"
             value={username}
             onChange={(e) => setUsername(e.target.value)}
+            // placeholder="Masukkan username"
           />
         </div>
-        <div className="flex flex-col font-montserrat w-full mt-10">
-          <h2 className="text-[#252525] text-sm mb-2">Password</h2>
+        <div className="flex flex-col font-montserrat w-full mt-12">
+          <h2 className="text-gray-800  text-md  font-semibold mb-1">Password</h2>
           <div className="flex flex-row font-montserrat w-full relative">
             <input
-              className="w-[95%] border-b border-black focus:outline-none text-textPrimary"
+              className="w-[95%] border-b border-black focus:outline-none text-textPrimary pb-2"
               type={showPassword ? "text" : "password"}
+              // placeholder="Masukkan password" 
               value={password}
               onChange={(e) => {
                 setPassword(e.target.value);
@@ -115,8 +117,8 @@ function LoginMentor() {
             {isLoading ? <div className="animate-spin rounded-full h-6 w-6 border-t-2 border-b-2 border-white"></div> : "Masuk"}
           </button>
           <h4 className="text-black text-xs sm:text-[16px] flex justify-center gap-3">
-            Kamu adalah siswa?
-            <Link href="/register" className="text-primary text-xs sm:text-[16px] font-semibold">
+            Kamu adalah mentor?
+            <Link href="http://localhost:3000" className="text-primary text-xs sm:text-[16px] font-semibold">
               Masuk
             </Link>
           </h4>
