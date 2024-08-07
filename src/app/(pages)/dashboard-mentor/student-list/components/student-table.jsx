@@ -25,28 +25,19 @@ const StudentTable = () => {
 
   const tableHead = [
     { menu: 'Nama' },
-    { menu: 'Kelas' },
     { menu: 'Jurusan' },
-    { menu: 'Status' },
     { menu: 'Tanggal Lahir' },
-    { menu: 'Angkatan' },
   ];
 
-  const kelasOptions = ['X', 'XI', 'XII'];
-  const angkatanOptions = ['2022', '2023', '2024', '2025', '2026'];
-  const statusOptions = ['Aktif', 'Lulus'];
+  
 
   const filteredStudents = students.filter(student => {
     return (
       student.name.toLowerCase().includes(searchTerm.toLowerCase()) &&
-      (kelasFilter === '' || student.kelas === kelasFilter) &&
-      (jurusanFilter === '' || student.jurusan === jurusanFilter) &&
-      (statusFilter === '' || student.status === statusFilter) &&
-      (angkatanFilter === '' || student.angkatan === angkatanFilter)
+      (jurusanFilter === '' || student.jurusan === jurusanFilter) 
     );
   });
 
-  // Pagination logic
   const indexOfLastStudent = currentPage * studentsPerPage;
   const indexOfFirstStudent = indexOfLastStudent - studentsPerPage;
   const currentStudents = filteredStudents.slice(indexOfFirstStudent, indexOfLastStudent);
@@ -66,28 +57,10 @@ const StudentTable = () => {
         className="border px-2 py-3 my-2 w-full text-textPrimary"
       />
       <div className="flex gap-4 mb-4 text-textPrimary">
-        <select value={kelasFilter} onChange={(e) => setKelasFilter(e.target.value)} className="border px-2 py-1">
-          <option value="">Semua Kelas</option>
-          {kelasOptions.map((option, index) => (
-            <option key={index} value={option}>{option}</option>
-          ))}
-        </select>
         <select value={jurusanFilter} onChange={(e) => setJurusanFilter(e.target.value)} className="border px-2 py-1">
           <option value="">Semua Jurusan</option>
           {majors.map((major, index) => (
             <option key={index} value={major.name}>{major.grade_name}</option>
-          ))}
-        </select>
-        <select value={statusFilter} onChange={(e) => setStatusFilter(e.target.value)} className="border px-2 py-1">
-          <option value="">Semua Status</option>
-          {statusOptions.map((option, index) => (
-            <option key={index} value={option}>{option}</option>
-          ))}
-        </select>
-        <select value={angkatanFilter} onChange={(e) => setAngkatanFilter(e.target.value)} className="border px-2 py-1">
-          <option value="">Semua Angkatan</option>
-          {angkatanOptions.map((option, index) => (
-            <option key={index} value={option}>{option}</option>
           ))}
         </select>
       </div>
@@ -103,11 +76,8 @@ const StudentTable = () => {
           {currentStudents.map((student) => (
             <tr key={student.id} className="border-b border-gray-200 text-textPrimary">
               <td className="py-2 px-4">{student.name}</td>
-              <td className="py-2 px-4">{student.kelas}</td>
               <td className="py-2 px-4">{student.jurusan}</td>
-              <td className="py-2 px-4">{student.status}</td>
               <td className="py-2 px-4">{student.birthDate}</td>
-              <td className="py-2 px-4">{student.angkatan}</td>
             </tr>
           ))}
         </tbody>

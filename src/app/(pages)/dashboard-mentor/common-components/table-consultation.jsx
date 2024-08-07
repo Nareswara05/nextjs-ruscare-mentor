@@ -9,6 +9,7 @@ import { RxCross2 } from 'react-icons/rx';
 import Link from "next/link";
 import { HiCalendarDays } from "react-icons/hi2";
 import data from './data';
+import Swal from 'sweetalert2';
 
 const TableConsultation = ({ status, title }) => {
     const [isModalOpen, setIsModalOpen] = useState(false);
@@ -34,6 +35,71 @@ const TableConsultation = ({ status, title }) => {
         setIsModalOpen(false);
         setSelectedData(null);
     };
+
+    const handleCancel = (item) => {
+        Swal.fire({
+            title: 'Apakah kamu yakin ingin membatalkan konsultasi ini?',
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#d33',
+            cancelButtonColor: '#3085d6',
+            confirmButtonText: 'Ya, batalkan',
+            cancelButtonText: 'Tidak'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                console.log('Konsultasi dibatalkan:', item);
+
+                const Toast = Swal.mixin({
+                    toast: true,
+                    position: "top-end",
+                    showConfirmButton: false,
+                    timer: 3000,
+                    timerProgressBar: true,
+                    didOpen: (toast) => {
+                        toast.onmouseenter = Swal.stopTimer;
+                        toast.onmouseleave = Swal.resumeTimer;
+                    }
+                });
+
+                Toast.fire({
+                    icon: "success",
+                    title: "Konsultasi berhasil dibatalkan"
+                });
+            }
+        });
+    };
+
+    async function handleMailbox (item) {
+        const { value: text } = await Swal.fire({
+            input: "textarea",
+            inputLabel: "Kirim Pesan ke Murid",
+            inputPlaceholder: "Masukkan pesan kamu disini", 
+            inputAttributes: {
+              "aria-label": "Type your message here"
+            },
+            showCancelButton: true
+          });
+          if (text) {
+            Swal.fire(text);
+          }
+    }
+
+    async function handleReschedule (item) {
+        const { value: text } = await Swal.fire({
+            input: "date",
+            inputLabel: "Masukkan penjadwalan baru",
+            inputPlaceholder: "Masukkan pesan kamu disini", 
+            inputAttributes: {
+              "aria-label": "Type your message here"
+            },
+            showCancelButton: true
+          });
+          if (text) {
+            Swal.fire(text);
+          }
+    }
+
+
 
     return (
         <div className="pt-12">
@@ -79,28 +145,30 @@ const TableConsultation = ({ status, title }) => {
                                             <button
                                                 className="text-red-500 p-2 bg-red-500 bg-opacity-20 hover:bg-red-700 hover:bg-opacity-20 hover:text-red-700 rounded-lg"
                                                 title="Reject"
+                                                onClick={() => handleCancel(item)}
                                             >
                                                 <RxCross2 size={24} />
                                             </button>
                                         </>
                                     )}
-                                    {(item.status === 'pending' || item.status === 'done' || item.status === 'akanDatang' || item.status === 'reschedule') && (
+                                    {(item.status === 'pending' || item.status === 'done' || item.status === 'upcoming' || item.status === 'reschedule') && (
                                         <button
                                             className="text-blue-500 p-2 bg-blue-500 bg-opacity-20 rounded-lg hover:bg-blue-700 hover:bg-opacity-20 hover:text-blue-700"
                                             title="Send Email"
+                                            onClick={() => handleMailbox(item)}
                                         >
                                             <IoMdMail size={24} />
                                         </button>
                                     )}
-                                    {(item.status === 'done' || item.status === 'akanDatang' || item.status === 'reschedule') && (
+                                    {( item.status === 'upcoming' || item.status === 'reschedule') && (
                                         <button
                                             className="text-purple-500 bg-purple-500 rounded-lg hover:text-purple-700 hover:bg-purple-700 hover:bg-opacity-20 p-2 bg-opacity-20"
                                             title="Schedule"
+                                            onClick={() => handleReschedule(item)}
                                         >
                                             <HiCalendarDays size={24} />
                                         </button>
                                     )}
-
                                 </td>
                             </tr>
                         ))}

@@ -4,7 +4,7 @@ export function middleware(request) {
   const token = request.cookies.get('token');
   const url = request.nextUrl.clone();
 
-  if (!token && url.pathname === '/dashboard-mentor') {
+  if (!token && url.pathname.startsWith('/dashboard-mentor')) {
     url.pathname = '/';
     return NextResponse.redirect(url);
   }
@@ -18,5 +18,5 @@ export function middleware(request) {
 }
 
 export const config = {
-  matcher: ['/dashboard-mentor', '/'],
+  matcher: ['/dashboard-mentor/:path*', '/'],
 };

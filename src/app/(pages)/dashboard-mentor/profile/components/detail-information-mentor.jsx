@@ -78,7 +78,7 @@ export default function DetailInformationMentor () {
             <div className='flex justify-between pb-4'>
                 <Image
                     src={imageUrl}
-                    className="rounded-full w-32 object-cover"
+                    className="rounded-full w-32 h-32 object-cover"
                     width={500}
                     height={500}
                 />
@@ -111,27 +111,27 @@ export default function DetailInformationMentor () {
                     <h1 className='text-textPrimary font-medium'>{userData.grade_id}</h1>
                     <h1 className='text-textPrimary font-medium'>{userData.birth_date}</h1>
                     <h1 className='text-textPrimary font-medium'>{userData.experience} Tahun</h1>
-                    <h1 className='text-textPrimary font-medium'>{userData.last_university}</h1>
+                    <h1 className='text-textPrimary font-medium'>Universitas Muria Kudus</h1>
                     <h1 className='text-textPrimary font-medium'>{userData.last_education}</h1>
                     <h1 className='text-textPrimary font-medium'>{userData.age}</h1>
                     <div className='flex'>
                         <div className='flex gap-1'>
-                            <Link href={userData.instagram} className="p-2 text-textPrimary rounded-full hover:bg-primary hover:text-white">
+                            <Link href="www.instagram.com" className="p-2 text-textPrimary rounded-full hover:bg-primary hover:text-white">
                                 <FaInstagram />
                             </Link>
                         </div>
                         <div className='flex gap-1'>
-                            <Link href={userData.facebook} className="p-2 text-textPrimary rounded-full hover:bg-primary hover:text-white">
+                            <Link href="www.facebook.com" className="p-2 text-textPrimary rounded-full   hover:bg-primary hover:text-white">
                                 <FaFacebook />
                             </Link>
                         </div>
                         <div className='flex gap-1'>
-                            <Link href={userData.twitter} className="p-2 text-textPrimary rounded-full hover:bg-primary hover:text-white">
+                            <Link href="www.twitter.com" className="p-2 text-textPrimary rounded-full hover:bg-primary hover:text-white">
                                 <FaTwitter />
                             </Link>
                         </div>
                         <div className='flex gap-1'>
-                            <Link href={userData.linkedin} className="p-2 text-textPrimary rounded-full hover:bg-primary hover:text-white">
+                            <Link href="www.linkedin.com" className="p-2 text-textPrimary rounded-full hover:bg-primary hover:text-white">
                                 <FaLinkedin />
                             </Link>
                         </div>

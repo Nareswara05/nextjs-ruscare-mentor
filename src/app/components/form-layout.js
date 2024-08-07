@@ -7,6 +7,7 @@ import Link from "next/link";
 import { logoPurple } from "@/app/lib/utils/svg";
 import { useRouter } from "next/navigation";
 import login from "@/app/lib/service/endpoint/auth/login";
+import Swal from "sweetalert2";
 
 function LoginMentor() {
   const [username, setUsername] = useState("");
@@ -34,10 +35,24 @@ function LoginMentor() {
       if (response.status === 422) {
         if (response.message === "Email atau password salah") {
           setPasswordError("Terjadi kesalahan pada saat login.");
-        } else {
-          setPasswordError( "Terjadi kesalahan pada saat login.");
-        }
+        } 
       } else if (response.token) {
+        const Toast = Swal.mixin({
+          toast: true,
+          position: "top-end",
+          showConfirmButton: false,
+          timer: 3000,
+          timerProgressBar: true,
+          didOpen: (toast) => {
+              toast.onmouseenter = Swal.stopTimer;
+              toast.onmouseleave = Swal.resumeTimer;
+          }
+      });
+
+      Toast.fire({
+          icon: "success",
+          title: "Login berhasil"
+      });
         localStorage.setItem("token", (response.token));
         document.cookie = `token=${response.token}; path=/;`;
         setTimeout(() => {
