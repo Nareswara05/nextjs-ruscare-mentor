@@ -36,67 +36,100 @@ const TableConsultation = ({ status, title }) => {
         setSelectedData(null);
     };
 
-    const handleCancel = (item) => {
+    const handleCancel =(item)=> {
         Swal.fire({
-            title: 'Apakah kamu yakin ingin membatalkan konsultasi ini?',
+            title: 'Apakah kamu yakin ingin menolak konsultasi ini?',
             icon: 'warning',
             showCancelButton: true,
             confirmButtonColor: '#d33',
             cancelButtonColor: '#3085d6',
-            confirmButtonText: 'Ya, batalkan',
+            confirmButtonText: 'Ya, tolak',
             cancelButtonText: 'Tidak'
-        }).then((result) => {
+        }).then(async (result) => {
             if (result.isConfirmed) {
+                const { value: text } = await Swal.fire({
+                    input: "textarea",
+                    inputLabel: "Kirim pesan ke murid",
+                    inputPlaceholder: "Ketikkan pesan kamu disini",
+                    inputAttributes: {
+                        "aria-label": "Kirim pesan ke murid"
+                    },
+                    showCancelButton: true
+                });
+                if (text) {
+                    const Toast = Swal.mixin({
+                        toast: true,
+                        position: "top-end",
+                        showConfirmButton: false,
+                        timer: 3000,
+                        timerProgressBar: true,
+                        didOpen: (toast) => {
+                            toast.onmouseenter = Swal.stopTimer;
+                            toast.onmouseleave = Swal.resumeTimer;
+                        }
+                    });
+
+                    Toast.fire({
+                        icon: "success",
+                        title: "Konsultasi berhasil dibatalkan"
+                    });
+                }
                 console.log('Konsultasi dibatalkan:', item);
 
-                const Toast = Swal.mixin({
-                    toast: true,
-                    position: "top-end",
-                    showConfirmButton: false,
-                    timer: 3000,
-                    timerProgressBar: true,
-                    didOpen: (toast) => {
-                        toast.onmouseenter = Swal.stopTimer;
-                        toast.onmouseleave = Swal.resumeTimer;
-                    }
-                });
 
-                Toast.fire({
-                    icon: "success",
-                    title: "Konsultasi berhasil dibatalkan"
-                });
             }
         });
     };
 
-    async function handleMailbox (item) {
+    const handleAccept = () => {
+        Swal.fire({
+            title: "Apakah kamu yakin akan menerima?",
+            text: "Pastikan kamu memiliki jadwal untuk konsultasi ini",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#3085d6",
+            cancelButtonColor: "#d33",
+            confirmButtonText: "Yes, Terima",
+            cancelButtonText: "Batalkan",
+        }).then((result) => {
+            if (result.isConfirmed) {
+                Swal.fire({
+                    title: "Diterima!",
+                    text: "Kamu berhasil menerima konsultasi ini",
+                    icon: "success"
+                });
+            }
+        });
+    }
+
+    async function handleMailbox(item) {
         const { value: text } = await Swal.fire({
             input: "textarea",
             inputLabel: "Kirim Pesan ke Murid",
-            inputPlaceholder: "Masukkan pesan kamu disini", 
+            inputPlaceholder: "Masukkan pesan kamu disini",
             inputAttributes: {
-              "aria-label": "Type your message here"
+                "aria-label": "Type your message here"
             },
             showCancelButton: true
-          });
-          if (text) {
+        });
+        if (text) {
             Swal.fire(text);
-          }
+        }
     }
 
-    async function handleReschedule (item) {
+    async function handleReschedule(item) {
         const { value: text } = await Swal.fire({
             input: "date",
             inputLabel: "Masukkan penjadwalan baru",
-            inputPlaceholder: "Masukkan pesan kamu disini", 
+            inputPlaceholder: "Masukkan pesan kamu disini",
             inputAttributes: {
-              "aria-label": "Type your message here"
+                "aria-label": "Type your message here"
             },
             showCancelButton: true
-          });
-          if (text) {
+        });
+        if (text) {
             Swal.fire(text);
-          }
+        }
     }
 
 
@@ -139,6 +172,7 @@ const TableConsultation = ({ status, title }) => {
                                             <button
                                                 className="text-green-500 bg-green-500 bg-opacity-20 rounded-lg p-2 hover:bg-green-700 hover:bg-opacity-20 hover:text-green-700"
                                                 title="Accept"
+                                                onClick={handleAccept}
                                             >
                                                 <IoMdCheckmark size={24} />
                                             </button>
@@ -151,7 +185,7 @@ const TableConsultation = ({ status, title }) => {
                                             </button>
                                         </>
                                     )}
-                                    {(item.status === 'pending' || item.status === 'done' || item.status === 'upcoming' || item.status === 'reschedule') && (
+                                    {(item.status === 'done' || item.status === 'upcoming' || item.status === 'reschedule') && (
                                         <button
                                             className="text-blue-500 p-2 bg-blue-500 bg-opacity-20 rounded-lg hover:bg-blue-700 hover:bg-opacity-20 hover:text-blue-700"
                                             title="Send Email"
@@ -160,7 +194,7 @@ const TableConsultation = ({ status, title }) => {
                                             <IoMdMail size={24} />
                                         </button>
                                     )}
-                                    {( item.status === 'upcoming' || item.status === 'reschedule') && (
+                                    {(item.status === 'upcoming' || item.status === 'reschedule') && (
                                         <button
                                             className="text-purple-500 bg-purple-500 rounded-lg hover:text-purple-700 hover:bg-purple-700 hover:bg-opacity-20 p-2 bg-opacity-20"
                                             title="Schedule"
