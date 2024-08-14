@@ -2,14 +2,15 @@
 
 import React, { useState } from 'react';
 import { PiClockCountdownLight } from "react-icons/pi";
-import { BsCalendar2Week } from "react-icons/bs";
-import { VscLocation } from "react-icons/vsc";
+import { BsCalendar2Week, BsStopFill } from "react-icons/bs";
+import { VscDebugStart, VscLocation } from "react-icons/vsc";
 import { IoMdCheckmark, IoMdMail, IoMdEye } from 'react-icons/io';
 import { RxCross2 } from 'react-icons/rx';
 import Link from "next/link";
 import { HiCalendarDays } from "react-icons/hi2";
 import data from './data';
 import Swal from 'sweetalert2';
+import { FaPlay } from 'react-icons/fa';
 
 const TableConsultation = ({ status, title }) => {
     const [isModalOpen, setIsModalOpen] = useState(false);
@@ -96,6 +97,57 @@ const TableConsultation = ({ status, title }) => {
                 Swal.fire({
                     title: "Diterima!",
                     text: "Kamu berhasil menerima konsultasi ini",
+                    icon: "success"
+                });
+            }
+        });
+    }
+
+    const handleStart = () => {
+        Swal.fire({
+            title: "Apakah kamu ingin memulai konsultasi?",
+            text: "Pastikan kamu sudah bertemu dengan murid",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#3085d6",
+            cancelButtonColor: "#d33",
+            confirmButtonText: "Ya, Mulai",
+            cancelButtonText: "Batalkan",
+        }).then((result) => {
+            if (result.isConfirmed) {
+                const Toast = Swal.mixin({
+                    toast: true,
+                    position: "top-end",
+                    showConfirmButton: false,
+                    timer: 3000,
+                    timerProgressBar: true,
+                    didOpen: (toast) => {
+                      toast.onmouseenter = Swal.stopTimer;
+                      toast.onmouseleave = Swal.resumeTimer;
+                    }
+                  });
+                  Toast.fire({
+                    icon: "success",
+                    title: "Konsultasi telah dimulai, berikan pelayanan terbaik untuk muridmu!"
+                  });
+            }
+        });
+    }
+    const handleStop = () => {
+        Swal.fire({
+            title: "Apakah kamu ingin menyelesaikan konsultasi ini?",
+            text: "Pastikan kamu sudah selesai memberikan pelayanan terbaik untuk muridmu",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#3085d6",
+            cancelButtonColor: "#d33",
+            confirmButtonText: "Ya, Selesai",
+            cancelButtonText: "Batalkan",
+        }).then((result) => {
+            if (result.isConfirmed) {
+                Swal.fire({
+                    title: "Selesai!",
+                    text: " Konsultasi ini telah selesai, terima kasih telah memberikan pelayanan terbaik untuk muridmu",
                     icon: "success"
                 });
             }
@@ -201,6 +253,24 @@ const TableConsultation = ({ status, title }) => {
                                             onClick={() => handleReschedule(item)}
                                         >
                                             <HiCalendarDays size={24} />
+                                        </button>
+                                    )}
+                                    {(item.status === 'ongoing' ) && (
+                                        <button
+                                            className="text-cyan-500 bg-cyan-500 rounded-lg hover:text-cyan-700 hover:bg-cyan-700 hover:bg-opacity-20 p-2 bg-opacity-20"
+                                            title="Schedule"
+                                            onClick={() => handleStop(item)}
+                                        >
+                                            <BsStopFill  size={24} />
+                                        </button>
+                                    )}
+                                    {(item.status === 'upcoming' ) && (
+                                        <button
+                                            className="text-orange-500 bg-orange-500 rounded-lg hover:text-orange-700 hover:bg-orange-700 hover:bg-opacity-20 p-2 bg-opacity-20"
+                                            title="upcoming"
+                                            onClick={() => handleStart(item)}
+                                        >
+                                            <FaPlay   size={24} />
                                         </button>
                                     )}
                                 </td>

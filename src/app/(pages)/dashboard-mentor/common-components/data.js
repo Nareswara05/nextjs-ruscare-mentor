@@ -33,7 +33,7 @@ const data = [
         location: "Zoom",
         mentor: "Ibu Siti",
         detail: "Detail tentang Konseling Online",
-        status: "done"
+        status: "ongoing"
     },
         {
             "name": "Ronald",

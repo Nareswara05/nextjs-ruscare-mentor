@@ -22,6 +22,7 @@ const EditInformationMentor = () => {
                 <div className='flex items-center gap-4 pb-4'>
                     <Image
                         src={AvatarTes}
+                        alt="profile"
                         className="rounded-full w-32 h-32 object-cover"
                     />
                     <Link href="profile/edit-profile">

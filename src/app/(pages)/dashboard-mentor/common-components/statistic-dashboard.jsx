@@ -10,7 +10,8 @@ import { AiOutlineClockCircle } from 'react-icons/ai';
 import { IoCalendarClearOutline, IoCheckmarkDone } from 'react-icons/io5';
 import { TbCalendarClock } from "react-icons/tb";
 import { MdHourglassEmpty } from 'react-icons/md';
-import { RiCalendarScheduleLine } from 'react-icons/ri';
+import { RiCalendarScheduleLine, RiProgress2Line } from 'react-icons/ri';
+import { BsCalendarX } from 'react-icons/bs';
 
 
 const getCountByStatus = (status) => {
@@ -44,11 +45,11 @@ const statsData = [
   },
   {
     id: 4,
-    title: 'Telah Ditolak',
-    count: getCountByStatus('rejected'),
-    color: '#FF3797',
-    icon: <RxCross2 />,
-    status: 'rejected',
+    title: 'Sedang Berlangsung',
+    count: getCountByStatus('ongoing'),
+    color: '#FF6827',
+    icon: <RiProgress2Line  />,
+    status: 'ongoing',
   },
   {
     id: 5,
@@ -57,6 +58,14 @@ const statsData = [
     color: '#9F41EA',
     icon: <RiCalendarScheduleLine />,
     status: 'reschedule',
+  },
+  {
+    id: 7,
+    title: 'Kadaluarsa',
+    count: getCountByStatus('expired'),
+    color: '#808080',
+    icon: <BsCalendarX />,
+    status: 'expired',
   },
 ];
 
@@ -70,7 +79,7 @@ const DashboardStats = () => {
   return (
     <div>
       <h1 className='text-[24px] text-textPrimary font-bold'>Statistik Mentor</h1>
-      <div className='flex flex-row gap-3 pt-8'>
+      <div className='grid grid-cols-3 gap-3 pt-8'>
         {statsData.map((stat) => (
           <div
             key={stat.id}

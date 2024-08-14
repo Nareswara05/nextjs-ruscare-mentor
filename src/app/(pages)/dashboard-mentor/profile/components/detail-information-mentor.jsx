@@ -79,6 +79,7 @@ export default function DetailInformationMentor () {
                 <Image
                     src={imageUrl}
                     className="rounded-full w-32 h-32 object-cover"
+                    alt={userData.name}
                     width={500}
                     height={500}
                 />
@@ -93,7 +94,7 @@ export default function DetailInformationMentor () {
             <div className='flex gap-6'>
                 <div className='flex flex-col gap-2'>
                     {title.map((item) => (
-                        <h1 className='text-textPrimary font-semibold ' >{item.title} </h1>
+                        <h1 className='text-textPrimary font-semibold ' key={item.id}>{item.title} </h1>
                     ))}
                 </div>
                 <div className='flex flex-col gap-2'>
