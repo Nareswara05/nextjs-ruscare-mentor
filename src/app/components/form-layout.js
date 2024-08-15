@@ -117,8 +117,8 @@ function LoginMentor() {
             {isLoading ? <div className="animate-spin rounded-full h-6 w-6 border-t-2 border-b-2 border-white"></div> : "Masuk"}
           </button>
           <h4 className="text-black text-xs sm:text-[16px] flex justify-center gap-3">
-            Kamu adalah mentor?
-            <Link href="http://localhost:3000" className="text-primary text-xs sm:text-[16px] font-semibold">
+            Kamu adalah siswa?
+            <Link href="https://ruscare.vercel.app/" className="text-primary text-xs sm:text-[16px] font-semibold">
               Masuk
             </Link>
           </h4>
