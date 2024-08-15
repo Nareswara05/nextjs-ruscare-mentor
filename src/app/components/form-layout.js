@@ -73,7 +73,7 @@ function LoginMentor() {
         <Image src={logoPurple} width={115} height={50} alt="Logo" />
         <div className="mt-6 font-montserrat text-textPrimary">
           <div className="font-bold text-3xl">Masuk sebagai mentor</div>
-          <div className="mt-4">Masukkan email dan password Anda untuk masuk</div>
+          <div className="mt-4">Masukkan username dan password Anda untuk masuk</div>
         </div>
         <div className="flex flex-col font-montserrat w-full mt-16">
           <h2 className="text-gray-800 font-semibold text-md mb-1">Username</h2>
