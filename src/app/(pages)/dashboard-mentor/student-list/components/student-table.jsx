@@ -3,6 +3,7 @@
 import React, { useState, useEffect } from 'react';
 import listMajor from '@/app/lib/service/endpoint/api/list-major';
 import listStudent from '@/app/lib/service/endpoint/api/list-student';
+import { ClipLoader } from 'react-spinners';
 
 const StudentTable = () => {
   const [searchTerm, setSearchTerm] = useState('');
@@ -11,6 +12,7 @@ const StudentTable = () => {
   const [majors, setMajors] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [studentsPerPage] = useState(8);
+  const [loading, setLoading] = useState(true);
   const [students, setStudents] = useState([]);
 
   useEffect(() => {
@@ -35,6 +37,8 @@ const StudentTable = () => {
         setStudents(studentData);
       } catch (error) {
         console.error('Error fetching students:', error);
+      }finally{
+        setLoading(false);
       }
     }
 
@@ -77,6 +81,14 @@ const StudentTable = () => {
         return "Unknown";
     }
   };
+
+  if(loading){
+    return (
+      <div className="flex justify-center items-center h-screen">
+        <ClipLoader color="#9F41EA" loading={loading} size={50} />
+      </div>
+    )
+  }
 
   const filteredStudents = students;
 

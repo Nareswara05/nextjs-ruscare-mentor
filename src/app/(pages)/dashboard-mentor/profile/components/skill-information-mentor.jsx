@@ -2,6 +2,7 @@
 
 import getMentor from '@/app/lib/service/endpoint/mentor/get-mentor';
 import React, {useState, useEffect} from 'react'
+import Skeleton from 'react-loading-skeleton';
 
 const SkillInformationMentor = () => {
     const [userData, setUserData] = useState(null);
@@ -23,7 +24,7 @@ const SkillInformationMentor = () => {
     }, []);
 
     if (loading) {
-        return <div>Loading...</div>;
+        return <Skeleton height={50}/>;
     }
 
     if (!userData) {

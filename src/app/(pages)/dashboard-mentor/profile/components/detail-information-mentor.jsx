@@ -7,6 +7,9 @@ import Image from 'next/image'
 import { AvatarTes } from '@/app/lib/utils/image'
 import { FiEdit } from 'react-icons/fi'
 import getMentor from '@/app/lib/service/endpoint/mentor/get-mentor'
+import Skeleton from 'react-loading-skeleton'
+import 'react-loading-skeleton/dist/skeleton.css'
+
 
 
 export default function DetailInformationMentor () {
@@ -64,7 +67,7 @@ export default function DetailInformationMentor () {
     }, []);
 
     if (loading) {
-        return <div>Loading...</div>;
+       return <Skeleton height={500}/>
     }
 
     if (!userData) {

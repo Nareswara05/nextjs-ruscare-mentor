@@ -49,6 +49,8 @@ const TableHistory = () => {
                 return 'bg-[#8280FF] text-center text-[#8280FF] bg-opacity-30 font-medium';
             case 'reschedule':
                 return 'bg-[#9F41EA] text-center text-[#9F41EA] bg-opacity-30 font-medium';
+            case 'ongoing':
+                return 'bg-[#FF6827] text-center text-[#FF6827] bg-opacity-30 font-medium';
             default:
                 return '';
         }
@@ -81,12 +83,12 @@ const TableHistory = () => {
     return (
         <div>
             <input
-                    type="text"
-                    placeholder="Cari Nama"
-                    value={searchName}
-                    onChange={(e) => setSearchName(e.target.value)}
-                    className="border p-2 my-3 rounded w-full text-textPrimary"
-                />
+                type="text"
+                placeholder="Cari Nama"
+                value={searchName}
+                onChange={(e) => setSearchName(e.target.value)}
+                className="border p-2 my-3 rounded w-full text-textPrimary"
+            />
             <div className="flex gap-4 mb-4">
                 <select
                     value={filterService}
@@ -146,11 +148,11 @@ const TableHistory = () => {
                 </thead>
                 <tbody>
                     {getPaginatedData(filteredData).map((item, index) => (
-                        <tr key={index} className="border-b border-gray-200 text-sm text-textPrimary">
+                        <tr key={index} className="border-b border-gray-200 text-sm py-5 text-textPrimary">
                             <td className="py-4 px-4">{item.name}</td>
                             <td className="py-4 px-4">{item.service}</td>
                             <td className="py-4 px-4">{item.category}</td>
-                            <td className={`px-4 py-4 font-semibold ${getStatusStyles(item.status)}`}>{item.status}</td>
+                            <td className={`px-4 py-4 font-semibold rounded-xl ${getStatusStyles(item.status)}`}>{item.status}</td>
                             <td className="py-4 px-4">{item.date}</td>
                         </tr>
                     ))}
