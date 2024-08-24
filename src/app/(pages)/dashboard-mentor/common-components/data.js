@@ -9,7 +9,7 @@ const data = [
         location: "Lab PPLG",
         mentor: "Bu Devyta",
         detail: "Detail tentang Konseling Individual",
-        status: "rejected"
+        status: "canceled"
     },
     {
         name: "Ani",
@@ -33,7 +33,7 @@ const data = [
         location: "Zoom",
         mentor: "Ibu Siti",
         detail: "Detail tentang Konseling Online",
-        status: "ongoing"
+        status: "canceled"
     },
         {
             "name": "Ronald",
@@ -45,7 +45,7 @@ const data = [
             "location": "Ruang 101",
             "mentor": "Pak Budi",
             "detail": "Sense step president range.",
-            "status": "rejected"
+            "status": "canceled"
         },
         {
             "name": "Jennifer",
@@ -57,7 +57,7 @@ const data = [
             "location": "Ruang 101",
             "mentor": "Ibu Siti",
             "detail": "Heavy every cut near want.",
-            "status": "rejected"
+            "status": "canceled"
         },
         {
             "name": "Victor",
@@ -129,7 +129,7 @@ const data = [
             "location": "Zoom",
             "mentor": "Ibu Siti",
             "detail": "Decide nature deep else friend.",
-            "status": "rejected"
+            "status": "canceled"
         },
         {
             "name": "Madison",

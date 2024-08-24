@@ -1,7 +1,7 @@
 import React from 'react'
 import { FiEdit } from 'react-icons/fi'
 import { IoSaveOutline } from 'react-icons/io5'
-import EditInformationMentor from './components/edit-information-mentor'
+import EditInformationMentor from '../../components/edit-information-mentor'
 import EditInformationSkill from './components/edit-information-skill-mentor'
 import EditInformationSocialMedia from './components/edit-information-socialmedia'
 

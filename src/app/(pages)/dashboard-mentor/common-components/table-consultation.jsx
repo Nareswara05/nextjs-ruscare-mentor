@@ -11,6 +11,8 @@ import { HiCalendarDays } from "react-icons/hi2";
 import data from './data';
 import Swal from 'sweetalert2';
 import { FaPlay } from 'react-icons/fa';
+import { IoCheckmarkDone } from "react-icons/io5";
+
 
 const TableConsultation = ({ status, title }) => {
     const [isModalOpen, setIsModalOpen] = useState(false);
@@ -37,50 +39,7 @@ const TableConsultation = ({ status, title }) => {
         setSelectedData(null);
     };
 
-    const handleCancel =(item)=> {
-        Swal.fire({
-            title: 'Apakah kamu yakin ingin menolak konsultasi ini?',
-            icon: 'warning',
-            showCancelButton: true,
-            confirmButtonColor: '#d33',
-            cancelButtonColor: '#3085d6',
-            confirmButtonText: 'Ya, tolak',
-            cancelButtonText: 'Tidak'
-        }).then(async (result) => {
-            if (result.isConfirmed) {
-                const { value: text } = await Swal.fire({
-                    input: "textarea",
-                    inputLabel: "Kirim pesan ke murid",
-                    inputPlaceholder: "Ketikkan pesan kamu disini",
-                    inputAttributes: {
-                        "aria-label": "Kirim pesan ke murid"
-                    },
-                    showCancelButton: true
-                });
-                if (text) {
-                    const Toast = Swal.mixin({
-                        toast: true,
-                        position: "top-end",
-                        showConfirmButton: false,
-                        timer: 3000,
-                        timerProgressBar: true,
-                        didOpen: (toast) => {
-                            toast.onmouseenter = Swal.stopTimer;
-                            toast.onmouseleave = Swal.resumeTimer;
-                        }
-                    });
 
-                    Toast.fire({
-                        icon: "success",
-                        title: "Konsultasi berhasil dibatalkan"
-                    });
-                }
-                console.log('Konsultasi dibatalkan:', item);
-
-
-            }
-        });
-    };
 
     const handleAccept = () => {
         Swal.fire({
@@ -92,66 +51,59 @@ const TableConsultation = ({ status, title }) => {
             cancelButtonColor: "#d33",
             confirmButtonText: "Yes, Terima",
             cancelButtonText: "Batalkan",
-        }).then((result) => {
+        }).then ( async (result)   => {
             if (result.isConfirmed) {
-                Swal.fire({
-                    title: "Diterima!",
-                    text: "Kamu berhasil menerima konsultasi ini",
-                    icon: "success"
+                const { value: text }  =  await Swal.fire({
+                    input: "textarea",
+                    inputLabel: "Tentukan lokasi berkonsultasi",
+                    inputPlaceholder: "Masukkan lokasi yang aman untuk berkonsultasi ",
+                    inputAttributes: {
+                        "aria-label": "Type your message here"
+                    },
+                    showCancelButton: true
                 });
+                if (text) {
+                    Swal.fire({
+                        title: "Diterima!",
+                        text: "Kamu berhasil menerima konsultasi ini",
+                        icon: "success"
+                    });
+                }
             }
         });
     }
 
-    const handleStart = () => {
-        Swal.fire({
-            title: "Apakah kamu ingin memulai konsultasi?",
-            text: "Pastikan kamu sudah bertemu dengan murid",
-            icon: "warning",
-            showCancelButton: true,
-            confirmButtonColor: "#3085d6",
-            cancelButtonColor: "#d33",
-            confirmButtonText: "Ya, Mulai",
-            cancelButtonText: "Batalkan",
-        }).then((result) => {
-            if (result.isConfirmed) {
-                const Toast = Swal.mixin({
-                    toast: true,
-                    position: "top-end",
-                    showConfirmButton: false,
-                    timer: 3000,
-                    timerProgressBar: true,
-                    didOpen: (toast) => {
-                      toast.onmouseenter = Swal.stopTimer;
-                      toast.onmouseleave = Swal.resumeTimer;
-                    }
-                  });
-                  Toast.fire({
-                    icon: "success",
-                    title: "Konsultasi telah dimulai, berikan pelayanan terbaik untuk muridmu!"
-                  });
-            }
+    const handleDone = async () => {
+        const { value: text } = await Swal.fire({
+            input: "textarea",
+            inputLabel: "Kirim Catatan ke Murid",
+            inputPlaceholder: "Masukkan pesan kamu disini",
+            inputAttributes: {
+                "aria-label": "Type your message here"
+            },
+            showCancelButton: true
         });
-    }
-    const handleStop = () => {
-        Swal.fire({
-            title: "Apakah kamu ingin menyelesaikan konsultasi ini?",
-            text: "Pastikan kamu sudah selesai memberikan pelayanan terbaik untuk muridmu",
-            icon: "warning",
-            showCancelButton: true,
-            confirmButtonColor: "#3085d6",
-            cancelButtonColor: "#d33",
-            confirmButtonText: "Ya, Selesai",
-            cancelButtonText: "Batalkan",
-        }).then((result) => {
-            if (result.isConfirmed) {
-                Swal.fire({
-                    title: "Selesai!",
-                    text: " Konsultasi ini telah selesai, terima kasih telah memberikan pelayanan terbaik untuk muridmu",
-                    icon: "success"
-                });
-            }
-        });
+        if (text) {
+            Swal.fire({
+                title: "Apakah kamu ingin menyelesaikan konsultasi ini?",
+                text: "Pastikan kamu sudah selesai memberikan pelayanan terbaik untuk muridmu",
+                icon: "warning",
+                showCancelButton: true,
+                confirmButtonColor: "#3085d6",
+                cancelButtonColor: "#d33",
+                confirmButtonText: "Ya, Selesai",
+                cancelButtonText: "Batalkan",
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    Swal.fire({
+                        title: "Selesai!",
+                        text: " Konsultasi ini telah selesai, terima kasih telah memberikan pelayanan terbaik untuk muridmu",
+                        icon: "success"
+                    });
+                }
+            });
+        }
+
     }
 
     async function handleMailbox(item) {
@@ -228,13 +180,6 @@ const TableConsultation = ({ status, title }) => {
                                             >
                                                 <IoMdCheckmark size={24} />
                                             </button>
-                                            <button
-                                                className="text-red-500 p-2 bg-red-500 bg-opacity-20 hover:bg-red-700 hover:bg-opacity-20 hover:text-red-700 rounded-lg"
-                                                title="Reject"
-                                                onClick={() => handleCancel(item)}
-                                            >
-                                                <RxCross2 size={24} />
-                                            </button>
                                         </>
                                     )}
                                     {(item.status === 'done' || item.status === 'upcoming' || item.status === 'reschedule') && (
@@ -246,31 +191,22 @@ const TableConsultation = ({ status, title }) => {
                                             <IoMdMail size={24} />
                                         </button>
                                     )}
-                                    {(item.status === 'upcoming' || item.status === 'reschedule') && (
+                                    {(item.status === 'upcoming' || item.status === 'reschedule' || item.status === 'pending') && (
                                         <button
                                             className="text-purple-500 bg-purple-500 rounded-lg hover:text-purple-700 hover:bg-purple-700 hover:bg-opacity-20 p-2 bg-opacity-20"
-                                            title="Schedule"
+                                            title="Reschedule"
                                             onClick={() => handleReschedule(item)}
                                         >
                                             <HiCalendarDays size={24} />
                                         </button>
                                     )}
-                                    {(item.status === 'ongoing' ) && (
+                                    {(item.status === 'upcoming') && (
                                         <button
                                             className="text-cyan-500 bg-cyan-500 rounded-lg hover:text-cyan-700 hover:bg-cyan-700 hover:bg-opacity-20 p-2 bg-opacity-20"
                                             title="Schedule"
-                                            onClick={() => handleStop(item)}
+                                            onClick={() => handleDone(item)}
                                         >
-                                            <BsStopFill  size={24} />
-                                        </button>
-                                    )}
-                                    {(item.status === 'upcoming' ) && (
-                                        <button
-                                            className="text-orange-500 bg-orange-500 rounded-lg hover:text-orange-700 hover:bg-orange-700 hover:bg-opacity-20 p-2 bg-opacity-20"
-                                            title="upcoming"
-                                            onClick={() => handleStart(item)}
-                                        >
-                                            <FaPlay   size={24} />
+                                            <IoCheckmarkDone size={24} />
                                         </button>
                                     )}
                                 </td>

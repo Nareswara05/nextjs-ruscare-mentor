@@ -45,14 +45,6 @@ const statsData = [
   },
   {
     id: 4,
-    title: 'Sedang Berlangsung',
-    count: getCountByStatus('ongoing'),
-    color: '#FF6827',
-    icon: <RiProgress2Line  />,
-    status: 'ongoing',
-  },
-  {
-    id: 5,
     title: 'Jadwal Ulang',
     count: getCountByStatus('reschedule'),
     color: '#9F41EA',
@@ -60,7 +52,7 @@ const statsData = [
     status: 'reschedule',
   },
   {
-    id: 7,
+    id: 5,
     title: 'Kadaluarsa',
     count: getCountByStatus('expired'),
     color: '#808080',
@@ -79,7 +71,7 @@ const DashboardStats = () => {
   return (
     <div>
       <h1 className='text-[24px] text-textPrimary font-bold'>Statistik Mentor</h1>
-      <div className='grid grid-cols-3 gap-3 pt-8'>
+      <div className='grid grid-cols-5 gap-3 pt-8'>
         {statsData.map((stat) => (
           <div
             key={stat.id}
