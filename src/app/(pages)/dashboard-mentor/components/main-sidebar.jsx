@@ -10,6 +10,8 @@ import { PiStudent } from "react-icons/pi";
 import { RxDashboard } from "react-icons/rx";
 import { FaUser } from "react-icons/fa";
 import { FiUser } from "react-icons/fi";
+import { BsMailbox } from "react-icons/bs";
+import { CiMail } from "react-icons/ci";
 
 
 
@@ -35,6 +37,11 @@ export default function MainSideBar() {
       href: "/dashboard-mentor/history",
       icon: <VscHistory className="mr-4" size={25} />,
       label: "Riwayat",
+    },
+    {
+      href: "/dashboard-mentor/mailbox",
+      icon: <CiMail className="mr-4" size={25} />,
+      label: "Mailbox",
     },
     {
       href: "/dashboard-mentor/profile",

@@ -1,6 +1,6 @@
 import instance from "../../instance/instance";
 
-export default async function listStudent(search = "", year = "", grade_id = "") {
+export default async function listStudent(search = "", year = "", grade_id = "", student_id = "") {
   try {
     let url;
     if (search) {
@@ -9,7 +9,7 @@ export default async function listStudent(search = "", year = "", grade_id = "")
       url = `/student/show-by/entry-year/${year}`;
     } else if (grade_id) {
       url = `/student/show-by/grade/${grade_id}`;
-    } else {
+    }else {
       url = "/student/list";
     }
     const response = await instance.get(url);
