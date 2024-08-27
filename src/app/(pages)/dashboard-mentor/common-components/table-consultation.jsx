@@ -151,7 +151,10 @@ const TableConsultation = ({ consultations = [], title, loading }) => {
                         await Swal.fire({
                             title: 'Selesai!',
                             text: 'Konsultasi ini telah selesai, terima kasih telah memberikan pelayanan terbaik untuk muridmu',
-                            icon: 'success'
+                            icon: 'success',
+                            willClose: () => {
+                                window.location.reload();
+                            }
                         });
                     } else {
                         await Swal.fire({
