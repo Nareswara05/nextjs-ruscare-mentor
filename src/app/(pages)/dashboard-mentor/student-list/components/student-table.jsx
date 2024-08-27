@@ -14,6 +14,7 @@ const StudentTable = () => {
   const [studentsPerPage] = useState(8);
   const [loading, setLoading] = useState(true);
   const [students, setStudents] = useState([]);
+  const [uniqueYears, setUniqueYears] = useState([]);
 
   useEffect(() => {
     async function fetchMajors() {
@@ -35,9 +36,10 @@ const StudentTable = () => {
         const studentData = await listStudent(searchTerm, angkatanFilter, jurusanFilter);
         console.log('Fetched students:', studentData); // Debugging log
         setStudents(studentData);
+        extractUniqueYears(studentData); // Extract unique years
       } catch (error) {
         console.error('Error fetching students:', error);
-      }finally{
+      } finally {
         setLoading(false);
       }
     }
@@ -45,25 +47,17 @@ const StudentTable = () => {
     fetchStudents();
   }, [searchTerm, angkatanFilter, jurusanFilter]);
 
+  const extractUniqueYears = (studentData) => {
+    const years = [...new Set(studentData.map(student => student.year_of_entry))];
+    setUniqueYears(years.sort()); // Sort years in ascending order
+  };
+
   const tableHead = [
     { menu: 'Nama' },
     { menu: 'Jurusan' },
     { menu: 'Angkatan' },
     { menu: 'Tanggal Lahir' },
   ];
-
-  const yearStart = [
-    { year: 2022 },
-    { year: 2023 },
-    { year: 2024 },
-    { year: 2025 },
-    { year: 2026 },
-  ];
-
-  // const getMajorName = (grade_name) => {
-  //   const major = majors.find((major) => major.id === grade_name);
-  //   return major ? major.grade_name : 'Unknown';
-  // };
 
   const getMajorName = (grade_id) => {
     switch (grade_id) {
@@ -82,12 +76,12 @@ const StudentTable = () => {
     }
   };
 
-  if(loading){
+  if (loading) {
     return (
       <div className="flex justify-center items-center h-screen">
         <ClipLoader color="#9F41EA" loading={loading} size={50} />
       </div>
-    )
+    );
   }
 
   const filteredStudents = students;
@@ -113,8 +107,8 @@ const StudentTable = () => {
       <div className="flex gap-4 mb-4 text-textPrimary">
         <select value={angkatanFilter} onChange={(e) => setAngkatanFilter(e.target.value)} className="border px-2 py-1">
           <option value="">Semua Angkatan</option>
-          {yearStart.map((year, index) => (
-            <option key={index} value={year.year}>{year.year}</option>
+          {uniqueYears.map((year, index) => (
+            <option key={index} value={year}>{year}</option>
           ))}
         </select>
         <select value={jurusanFilter} onChange={(e) => setJurusanFilter(e.target.value)} className="border px-2 py-1 text-textPrimary">

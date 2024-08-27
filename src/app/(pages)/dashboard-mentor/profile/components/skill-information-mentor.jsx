@@ -34,7 +34,7 @@ const SkillInformationMentor = () => {
         <div className='border-2 border-gray-200 rounded-xl p-6 flex flex-col gap-8'>
             <div>
                 <h1 className='font-bold text-xl text-textPrimary pb-2'>Tentang Saya</h1>
-                <p className='text-textPrimary text-justify'>{userData.about_me}</p>
+                <p className='text-textPrimary text-justify'>{userData.about_me ?? 'Belum Diketahui'}</p>
             </div>
         </div>
     )

@@ -86,12 +86,6 @@ export default function DetailInformationMentor () {
                     width={500}
                     height={500}
                 />
-                <Link href="profile/edit-profile">
-                    <button className='bg-white py-3 px-4 border-2 flex h-fit items-center gap-2 font-medium text-primary border-primary rounded-lg hover:bg-primary hover:text-white'>
-                        <FiEdit />
-                        Edit Profil
-                    </button>
-                </Link>
             </div>
             <h1 className='font-bold text-[22px] text-textPrimary pb-6'>Detail Informasi Saya</h1>
             <div className='flex gap-6'>
@@ -112,12 +106,12 @@ export default function DetailInformationMentor () {
                 </div>
                 <div className='flex flex-col gap-2'>
                     <h1 className='text-textPrimary font-medium'>{userData.name}</h1>
-                    <h1 className='text-textPrimary font-medium'>{userData.grade_id}</h1>
-                    <h1 className='text-textPrimary font-medium'>{userData.birth_date}</h1>
-                    <h1 className='text-textPrimary font-medium'>{userData.experience} Tahun</h1>
-                    <h1 className='text-textPrimary font-medium'>Universitas Muria Kudus</h1>
-                    <h1 className='text-textPrimary font-medium'>{userData.last_education}</h1>
-                    <h1 className='text-textPrimary font-medium'>{userData.age}</h1>
+                    <h1 className='text-textPrimary font-medium'>{userData.grade_id ?? 'Belum Diketahui'}</h1>
+                    <h1 className='text-textPrimary font-medium'>{userData.birth_date ?? 'Belum Diketahui'}</h1>
+                    <h1 className='text-textPrimary font-medium'>{userData.experience ?? 'Belum Diketahui'} Tahun</h1>
+                    <h1 className='text-textPrimary font-medium'>{userData.last_university ?? 'Belum Diketahui'} </h1>
+                    <h1 className='text-textPrimary font-medium'>{userData.last_education ?? 'Belum Diketahui'}</h1>
+                    <h1 className='text-textPrimary font-medium'>{userData.age ?? 'Belum Diketahui'}</h1>
                     <div className='flex'>
                         <div className='flex gap-1'>
                             <Link href="www.instagram.com" className="p-2 text-textPrimary rounded-full hover:bg-primary hover:text-white">

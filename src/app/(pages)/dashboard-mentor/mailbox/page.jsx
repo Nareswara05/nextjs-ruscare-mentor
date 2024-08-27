@@ -6,16 +6,17 @@ import MailList from './components/mail-list';
 import SearchMailbox from './components/search-mailbox';
 import MailDetailPopup from './components/detail-mail-popup';
 import getMailboxMentor from '@/app/lib/service/endpoint/mentor/mailbox-mentor';
+import { ClipLoader } from 'react-spinners';
 
 const Page = () => {
     const [mails, setMails] = useState([]);
     const [selectedMail, setSelectedMail] = useState(null);
-    const [loading, setLoading] = useState(true); 
+    const [loading, setLoading] = useState(true);
     useEffect(() => {
         const fetchMails = async () => {
-            const data = await getMailboxMentor();  
-            setMails(data);  
-            setLoading(false);  
+            const data = await getMailboxMentor();
+            setMails(data);
+            setLoading(false);
         };
 
         fetchMails();
@@ -36,8 +37,9 @@ const Page = () => {
                 <ActionMailbox />
             </div> */}
             {loading ? (
-                <p>Loading...</p> 
-            ) : (
+                <div className="h-screen bg-white flex justify-center items-center">
+                    <ClipLoader size={50} color={"#123abc"} loading={loading} />
+                </div>) : (
                 mails.map((mail) => (
                     <MailList
                         key={mail.id}
