@@ -86,6 +86,12 @@ export default function DetailInformationMentor () {
                     width={500}
                     height={500}
                 />
+                <Link href="/dashboard-mentor/profile/edit-profile">
+                    <button className="px-6 py-3 bg-primary text-white flex items-center gap-2 rounded-lg hover:bg-purple-700">
+                        <FiEdit className='text text-[24px]'/>
+                        Edit Profil
+                    </button>
+                </Link>
             </div>
             <h1 className='font-bold text-[22px] text-textPrimary pb-6'>Detail Informasi Saya</h1>
             <div className='flex gap-6'>

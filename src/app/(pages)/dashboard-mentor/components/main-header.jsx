@@ -34,7 +34,7 @@ export default function MainHeader() {
   };
 
   return (
-    <div className="w-full py-6 bg-white flex flex-row justify-between items-center border-b-2 pr-8 sticky top-0">
+    <div className="w-full z-50 py-6 bg-white flex flex-row justify-between items-center border-b-2 pr-8 sticky top-0">
       <div className="w-full flex flex-row items-center">
         <div
           className={`flex ml-8 cursor-pointer text-textPrimary`}
