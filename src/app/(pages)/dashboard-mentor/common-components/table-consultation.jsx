@@ -17,6 +17,7 @@ import acceptCounseling from '@/app/lib/service/endpoint/dashboard/accept-counse
 import { IoCheckmarkDone } from 'react-icons/io5';
 import rescheduleCounseling from '@/app/lib/service/endpoint/dashboard/reschedule-counseling';
 import completeCounseling from '@/app/lib/service/endpoint/dashboard/complete-counseling';
+import { formatDate } from '@/app/lib/utils/formatDate';
 
 const TableConsultation = ({ consultations = [], title, loading }) => {
     const [isModalOpen, setIsModalOpen] = useState(false);
@@ -340,7 +341,7 @@ const TableConsultation = ({ consultations = [], title, loading }) => {
                                 <tr key={index} className="border-b border-gray-200 text-textPrimary">
                                     <td className="py-4 px-4">{getStudentName(item.student_id)}</td>
                                     <td className="py-4 px-4">{item.service}</td>
-                                    <td className="py-4 px-4">{item.counseling_date}</td>
+                                    <td className="py-4 px-4">{formatDate(item.counseling_date)}</td>
                                     <td className="py-4 px-4">{item.time}</td>
                                     <td className="py-4 px-4 flex gap-2">
                                         <button
@@ -408,7 +409,7 @@ const TableConsultation = ({ consultations = [], title, loading }) => {
                                 <div className="text-2xl">
                                     <BsCalendar2Week />
                                 </div>
-                                <h2 className="font-semibold text-[16px]">{selectedData.counseling_date}</h2>
+                                <h2 className="font-semibold text-[16px]">{formatDate(selectedData.counseling_date)}</h2>
                             </div>
                             <hr className="border-textPrimary border-1 w-4 rotate-90" />
                             <div className="flex gap-2 text-textPrimary">

@@ -12,6 +12,7 @@ import { IoMdEye } from 'react-icons/io';
 import { PiClockCountdownLight } from 'react-icons/pi';
 import { BsCalendar2Week } from 'react-icons/bs';
 import { VscLocation } from 'react-icons/vsc';
+import { formatDate } from '@/app/lib/utils/formatDate';
 
 
 const TableHistory = () => {
@@ -234,7 +235,7 @@ const TableHistory = () => {
                             <td className={`px-4 py-4 font-semibold rounded-xl text-center ${getStatusStyles(getStatusName(item.counseling_status_id))}`}>
                                 {getStatusName(item.counseling_status_id)}
                             </td>
-                            <td className="py-4 px-4">{item.counseling_date}</td>
+                            <td className="py-4 px-4">{formatDate(item.counseling_date)}</td>
                             <td className="py-3 px-4">
                                 <button
                                     className="text-secondary hover:text-yellow-500 bg-yellow-500 bg-opacity-20 hover:bg-yellow-700 hover:bg-opacity-20 p-2 rounded-lg"
@@ -283,7 +284,7 @@ const TableHistory = () => {
                                 <div className="text-2xl">
                                     <BsCalendar2Week />
                                 </div>
-                                <h2 className="font-semibold text-[16px]">{selectedData.counseling_date}</h2>
+                                <h2 className="font-semibold text-[16px]">{formatDate(selectedData.counseling_date)}</h2>
                             </div>
                             <hr className="border-textPrimary border-1 w-4 rotate-90" />
                             <div className="flex gap-2 text-textPrimary">
