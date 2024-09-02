@@ -274,11 +274,11 @@ const TableConsultation = ({ consultations = [], title, loading }) => {
     
 
 
-
+    
 
 
     let major = "";
-    switch (userData?.grade_id) {
+    switch (selectedData?.grade_id) {
         case 1:
             major = "PPLG";
             break;

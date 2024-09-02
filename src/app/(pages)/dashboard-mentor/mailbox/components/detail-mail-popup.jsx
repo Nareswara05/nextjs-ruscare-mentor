@@ -6,7 +6,7 @@ export default function MailDetailPopup({ data, onClose }) {
     if (!data) return null;
 
     return (
-        <div className="fixed inset-0 bg-black bg-opacity-20 flex items-center justify-center">
+        <div className="fixed inset-0 bg-black bg-opacity-20 flex items-center z-50 justify-center">
             <div className="bg-white p-5 rounded-lg w-[450px] shadow-lg relative">
                 <div className='flex w-full justify-end'>
                     <h1 className='font-normal text-[#77787A] text-[14px]'>{data.created_at}</h1>
