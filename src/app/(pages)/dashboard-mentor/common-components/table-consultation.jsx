@@ -129,7 +129,7 @@ const TableConsultation = ({ consultations = [], title, loading }) => {
                 },
                 showCancelButton: true
             });
-    
+
             if (text) {
                 const result = await Swal.fire({
                     title: 'Apakah kamu ingin menyelesaikan konsultasi ini?',
@@ -141,17 +141,26 @@ const TableConsultation = ({ consultations = [], title, loading }) => {
                     confirmButtonText: 'Ya, Selesai',
                     cancelButtonText: 'Batalkan'
                 });
-    
+
                 if (result.isConfirmed) {
                     const response = await completeCounseling({ counseling_id: item.id, note: text });
-    
-                    console.log('API Response:', response); 
-    
-                    if (response.message === 'Data Counseling berhasil diubah') { 
+
+                    console.log('API Response:', response);
+
+                    if (response.message === 'Data Counseling berhasil diubah') {
                         await Swal.fire({
                             title: 'Selesai!',
                             text: 'Konsultasi ini telah selesai, terima kasih telah memberikan pelayanan terbaik untuk muridmu',
                             icon: 'success',
+                            willClose: () => {
+                                window.location.reload();
+                            }
+                        });
+                    } else if (response.message === 'Konseling belum dilakukan') {
+                        Swal.fire({
+                            title: "Belum Saatnya",
+                            text: "Konseling dapat di selesaikan ketika waktu konseling telah tiba",
+                            icon: "warning",
                             willClose: () => {
                                 window.location.reload();
                             }
@@ -175,7 +184,7 @@ const TableConsultation = ({ consultations = [], title, loading }) => {
         }
     };
 
-   
+
     const handleReschedule = async (item) => {
         const { value: formValues } = await Swal.fire({
             title: "Reschedule Counseling",
@@ -211,18 +220,18 @@ const TableConsultation = ({ consultations = [], title, loading }) => {
             confirmButtonText: "Reschedule",
             cancelButtonText: "Cancel",
         });
-    
+
         if (formValues) {
             try {
                 console.log("Rescheduling with values:", formValues);
-    
+
                 const response = await rescheduleCounseling({
                     counseling_id: item.id,
                     date: formValues.date,
                     time: formValues.time,
                     place: formValues.place,
                 });
-    
+
                 if (response.message === 'Data Counseling berhasil diubah') {
                     Swal.fire({
                         title: 'Berhasil!',
@@ -270,11 +279,11 @@ const TableConsultation = ({ consultations = [], title, loading }) => {
             }
         }
     };
-    
-    
 
 
-    
+
+
+
 
 
     let major = "";
