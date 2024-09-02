@@ -76,6 +76,23 @@ export default function DetailInformationMentor () {
 
     const imageUrl = userData.image ? `https://api.ruscarestudent.com/${userData.image}` : unknownProfile;
 
+    const getMajorName = (grade_id) => {
+        switch (grade_id) {
+          case 1:
+            return "PPLG";
+          case 2:
+            return "Animasi 3D";
+          case 3:
+            return "Animasi 2D";
+          case 4:
+            return "Desain Grafis";
+          case 5:
+            return "Teknik Grafika";
+          default:
+            return "Unknown";
+        }
+      };
+
     return (
         <div className='border-2 border-gray-200 rounded-xl p-6'>
             <div className='flex justify-between pb-4'>
@@ -112,7 +129,7 @@ export default function DetailInformationMentor () {
                 </div>
                 <div className='flex flex-col gap-2'>
                     <h1 className='text-textPrimary font-medium'>{userData.name}</h1>
-                    <h1 className='text-textPrimary font-medium'>{userData.grade_id ?? 'Belum Diketahui'}</h1>
+                    <h1 className='text-textPrimary font-medium'>{getMajorName(userData.grade_id) ?? 'Belum Diketahui'}</h1>
                     <h1 className='text-textPrimary font-medium'>{userData.birth_date ?? 'Belum Diketahui'}</h1>
                     <h1 className='text-textPrimary font-medium'>{userData.experience ?? 'Belum Diketahui'} Tahun</h1>
                     <h1 className='text-textPrimary font-medium'>{userData.last_university ?? 'Belum Diketahui'} </h1>
