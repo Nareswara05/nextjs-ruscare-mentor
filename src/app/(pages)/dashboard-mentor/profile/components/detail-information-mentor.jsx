@@ -4,7 +4,7 @@ import React, {useState, useEffect} from 'react'
 import Link from 'next/link'
 import { FaFacebook, FaInstagram, FaLinkedin, FaTwitter } from 'react-icons/fa'
 import Image from 'next/image'
-import { AvatarTes } from '@/app/lib/utils/image'
+import { AvatarTes, unknownProfile } from '@/app/lib/utils/image'
 import { FiEdit } from 'react-icons/fi'
 import getMentor from '@/app/lib/service/endpoint/mentor/get-mentor'
 import Skeleton from 'react-loading-skeleton'
@@ -74,7 +74,7 @@ export default function DetailInformationMentor () {
         return <div>Error loading user data</div>;
     }
 
-    const imageUrl = `https://api.ruscarestudent.com/${userData.image}`;
+    const imageUrl = userData.image ? `https://api.ruscarestudent.com/${userData.image}` : unknownProfile;
 
     return (
         <div className='border-2 border-gray-200 rounded-xl p-6'>

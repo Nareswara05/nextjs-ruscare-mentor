@@ -5,6 +5,7 @@ export default async function listService() {
         const response = await instance.get("/data/service");
         return response.data.data;
     } catch (error) {
+        return [];
         console.error(error);
     }
 }

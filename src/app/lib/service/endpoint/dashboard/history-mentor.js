@@ -7,6 +7,6 @@ export default async function getHistoryMentor() {
         return response.data.data;
     } catch (error) {
         console.error("Error API:", error.response); 
-        return error.response.data;
+        return [];
     }
 }

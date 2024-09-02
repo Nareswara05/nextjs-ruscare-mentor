@@ -183,7 +183,7 @@ const EditProfile = () => {
         <ChangeProfilePicture image={image} onImageChange={handleImageChange} />
         <div className='flex flex-col w-full items-end'>
           <EditForm
-            placeholder="Masukkan Nama Baru Anda"
+            placeholder="Masukkan Username Baru Anda"
             label="Ganti Username"
             onChange={(e) => setUsername(e.target.value)}
           />

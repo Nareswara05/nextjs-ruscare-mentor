@@ -30,6 +30,10 @@ const Page = () => {
         setSelectedMail(null);
     };
 
+    if(mails.length === 0 ){
+        return <div className="flex justify-center text-textPrimary items-center h-full bg-white">Tidak ada mailbox</div>
+    }
+
     return (
         <div className='p-4 bg-white'>
             {/* <div className='flex justify-between'>
@@ -37,7 +41,7 @@ const Page = () => {
                 <ActionMailbox />
             </div> */}
             {loading ? (
-                <div className="h-screen bg-white flex justify-center items-center">
+                <div className="bg-white flex justify-center items-center">
                     <ClipLoader size={50} color={"#123abc"} loading={loading} />
                 </div>) : (
                 mails.map((mail) => (

@@ -16,5 +16,6 @@ export default async function listStudent(search = "", year = "", grade_id = "",
     return response.data.data;
   } catch (error) {
     console.error(error);
+    return[]
   }
 }

@@ -20,7 +20,7 @@ const StudentTable = () => {
     async function fetchMajors() {
       try {
         const majorData = await listMajor();
-        console.log('Fetched majors:', majorData); // Debugging log
+        console.log('Fetched majors:', majorData);
         setMajors(majorData);
       } catch (error) {
         console.error('Error fetching majors:', error);
@@ -34,9 +34,9 @@ const StudentTable = () => {
     async function fetchStudents() {
       try {
         const studentData = await listStudent(searchTerm, angkatanFilter, jurusanFilter);
-        console.log('Fetched students:', studentData); // Debugging log
+        console.log('Fetched students:', studentData);
         setStudents(studentData);
-        extractUniqueYears(studentData); // Extract unique years
+        extractUniqueYears(studentData);
       } catch (error) {
         console.error('Error fetching students:', error);
       } finally {
@@ -47,9 +47,11 @@ const StudentTable = () => {
     fetchStudents();
   }, [searchTerm, angkatanFilter, jurusanFilter]);
 
+
+
   const extractUniqueYears = (studentData) => {
     const years = [...new Set(studentData.map(student => student.year_of_entry))];
-    setUniqueYears(years.sort()); // Sort years in ascending order
+    setUniqueYears(years.sort());
   };
 
   const tableHead = [
@@ -127,15 +129,24 @@ const StudentTable = () => {
           </tr>
         </thead>
         <tbody>
-          {currentStudents.map((student) => (
-            <tr key={student.id} className="border-b border-gray-200 text-textPrimary">
-              <td className="py-2 px-4">{student.name}</td>
-              <td className="py-2 px-4">{getMajorName(student.grade_id)}</td>
-              <td className="py-2 px-4">{student.year_of_entry}</td>
-              <td className="py-2 px-4">{student.birth_date}</td>
+          {currentStudents.length > 0 ? (
+            currentStudents.map((student) => (
+              <tr key={student.id} className="border-b border-gray-200 text-textPrimary">
+                <td className="py-2 px-4">{student.name}</td>
+                <td className="py-2 px-4">{getMajorName(student.grade_id)}</td>
+                <td className="py-2 px-4">{student.year_of_entry}</td>
+                <td className="py-2 px-4">{student.birth_date}</td>
+              </tr>
+            ))
+          ) : (
+            <tr>
+              <td colSpan="4" className="py-4 text-center text-textPrimary">
+                Data murid kosong
+              </td>
             </tr>
-          ))}
+          )}
         </tbody>
+
       </table>
       <div className="flex justify-center my-4">
         {Array.from({ length: totalPages }, (_, index) => index + 1).map(number => (

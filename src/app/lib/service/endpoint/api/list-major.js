@@ -5,6 +5,6 @@ export default async function listMajor() {
         const response = await instance.get("/data/grade-list");
         return response.data.data;
     } catch (error) {
-        return error;
+        return [];
     }
 }

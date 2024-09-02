@@ -5,6 +5,6 @@ export default async function listCategory() {
         const response = await instance.get("/data/category");
         return response.data.data;
     } catch (error) {
-        console.error(error);
+        return [];
     }
 }
