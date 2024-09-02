@@ -113,12 +113,12 @@ const StudentTable = () => {
             <option key={index} value={year}>{year}</option>
           ))}
         </select>
-        <select value={jurusanFilter} onChange={(e) => setJurusanFilter(e.target.value)} className="border px-2 py-1 text-textPrimary">
+        {/* <select value={jurusanFilter} onChange={(e) => setJurusanFilter(e.target.value)} className="border px-2 py-1 text-textPrimary">
           <option value="">Semua Jurusan</option>
           {majors.map((major, index) => (
             <option key={index} value={major.id}>{major.grade_name}</option>
           ))}
-        </select>
+        </select> */}
       </div>
       <table className="min-w-full bg-white">
         <thead>
