@@ -34,7 +34,7 @@ const StudentTable = () => {
   useEffect(() => {
     async function fetchStudents() {
       try {
-        const studentData = await listStudent(searchTerm, angkatanFilter, jurusanFilter);
+        const studentData = await listStudent();
         console.log('Fetched students:', studentData);
         setStudents(studentData);
         extractUniqueYears(studentData);
@@ -46,9 +46,7 @@ const StudentTable = () => {
     }
 
     fetchStudents();
-  }, [searchTerm, angkatanFilter, jurusanFilter]);
-
-
+  }, []);
 
   const extractUniqueYears = (studentData) => {
     const years = [...new Set(studentData.map(student => student.year_of_entry))];
@@ -79,6 +77,13 @@ const StudentTable = () => {
     }
   };
 
+  const filteredStudents = students.filter((student) => {
+    const matchesSearchTerm = student.name.toLowerCase().includes(searchTerm.toLowerCase());
+    const matchesAngkatanFilter = angkatanFilter ? student.year_of_entry === angkatanFilter : true;
+    const matchesJurusanFilter = jurusanFilter ? student.grade_id === parseInt(jurusanFilter) : true;
+    return matchesSearchTerm && matchesAngkatanFilter && matchesJurusanFilter;
+  });
+
   if (loading) {
     return (
       <div className="flex justify-center items-center h-screen">
@@ -86,8 +91,6 @@ const StudentTable = () => {
       </div>
     );
   }
-
-  const filteredStudents = students;
 
   const indexOfLastStudent = currentPage * studentsPerPage;
   const indexOfFirstStudent = indexOfLastStudent - studentsPerPage;
@@ -114,12 +117,12 @@ const StudentTable = () => {
             <option key={index} value={year}>{year}</option>
           ))}
         </select>
-        {/* <select value={jurusanFilter} onChange={(e) => setJurusanFilter(e.target.value)} className="border px-2 py-1 text-textPrimary">
+        <select value={jurusanFilter} onChange={(e) => setJurusanFilter(e.target.value)} className="border px-2 py-1 text-textPrimary">
           <option value="">Semua Jurusan</option>
           {majors.map((major, index) => (
             <option key={index} value={major.id}>{major.grade_name}</option>
           ))}
-        </select> */}
+        </select>
       </div>
       <table className="min-w-full bg-white">
         <thead>
@@ -136,7 +139,7 @@ const StudentTable = () => {
                 <td className="py-2 px-4">{student.name}</td>
                 <td className="py-2 px-4">{getMajorName(student.grade_id)}</td>
                 <td className="py-2 px-4">{student.year_of_entry}</td>
-                <td className="py-2 px-4">{formatDate(student.birth_date)}</td>
+                <td className="py-2 px-4">{student.birth_date}</td>
               </tr>
             ))
           ) : (
@@ -147,7 +150,6 @@ const StudentTable = () => {
             </tr>
           )}
         </tbody>
-
       </table>
       <div className="flex justify-center my-4">
         {Array.from({ length: totalPages }, (_, index) => index + 1).map(number => (
