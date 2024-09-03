@@ -4,6 +4,7 @@ import React, { useState, useEffect } from 'react';
 import listMajor from '@/app/lib/service/endpoint/api/list-major';
 import listStudent from '@/app/lib/service/endpoint/api/list-student';
 import { ClipLoader } from 'react-spinners';
+import { formatDate } from '@/app/lib/utils/formatDate';
 
 const StudentTable = () => {
   const [searchTerm, setSearchTerm] = useState('');
@@ -135,7 +136,7 @@ const StudentTable = () => {
                 <td className="py-2 px-4">{student.name}</td>
                 <td className="py-2 px-4">{getMajorName(student.grade_id)}</td>
                 <td className="py-2 px-4">{student.year_of_entry}</td>
-                <td className="py-2 px-4">{student.birth_date}</td>
+                <td className="py-2 px-4">{formatDate(student.birth_date)}</td>
               </tr>
             ))
           ) : (
