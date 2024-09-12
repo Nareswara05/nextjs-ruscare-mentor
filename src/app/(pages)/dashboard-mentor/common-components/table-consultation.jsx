@@ -18,6 +18,7 @@ import { IoCheckmarkDone } from 'react-icons/io5';
 import rescheduleCounseling from '@/app/lib/service/endpoint/dashboard/reschedule-counseling';
 import completeCounseling from '@/app/lib/service/endpoint/dashboard/complete-counseling';
 import { formatDate } from '@/app/lib/utils/formatDate';
+import fetchSessions from '@/app/lib/service/endpoint/api/list-session';
 
 const TableConsultation = ({ consultations = [], title, loading }) => {
     const [isModalOpen, setIsModalOpen] = useState(false);
@@ -25,7 +26,7 @@ const TableConsultation = ({ consultations = [], title, loading }) => {
     const [userData, setUserData] = useState(null);
     const [studentList, setStudentList] = useState([]);
     const tableHead = ["Nama", "Layanan", "Tanggal", "Waktu", "Aksi"];
-    const [selectedCounseling, setSelectedCounseling] = useState(null);
+    const [sessions, setSessions] = useState([]); 
 
     const [studentNames, setStudentNames] = useState({});
 
@@ -34,14 +35,37 @@ const TableConsultation = ({ consultations = [], title, loading }) => {
             const students = await listStudent();
             setStudentList(students);
         };
+        const fetchSessionData = async () => {
+            const sessionData = await fetchSessions();
+            setSessions(sessionData);
+        };
 
         fetchStudents();
+        fetchSessionData();
     }, []);
 
     const getStudentName = (student_id) => {
         const student = studentList.find(student => student.id === student_id);
         return student ? student.name : 'Unknown';
     };
+
+    const getFormattedTimeRange = (session_id) => {
+        const session = sessions.find(session => session.id === session_id);
+        if (!session) {
+            return 'Not Found';
+        }
+    
+        const formatTime = (time) => {
+            const [hour, minute] = time.split(':');
+            return `${hour}.${minute}`;
+        };
+    
+        const startTimeFormatted = formatTime(session.start_time); 
+        const endTimeFormatted = formatTime(session.end_time);    
+    
+        return `${startTimeFormatted}-${endTimeFormatted}`;        
+    };
+    
 
     const openModal = (item) => {
         const student = studentList.find(student => student.id === item.student_id);
@@ -56,6 +80,26 @@ const TableConsultation = ({ consultations = [], title, loading }) => {
         setIsModalOpen(false);
         setSelectedData(null);
     };
+
+    const isCounselingTime = (counselingDate, sessionId) => {
+        const currentDate = new Date();
+        const counselingDay = new Date(counselingDate);
+        const session = sessions.find(s => s.id === sessionId);
+
+        if (!session) return false;
+
+        const [startHour, startMinute] = session.start_time.split(':').map(Number);
+        const [endHour, endMinute] = session.end_time.split(':').map(Number);
+
+        const sessionStart = new Date(counselingDay);
+        sessionStart.setHours(startHour, startMinute);
+
+        const sessionEnd = new Date(counselingDay);
+        sessionEnd.setHours(endHour, endMinute);
+
+        return currentDate >= sessionStart && currentDate <= sessionEnd;
+    };
+
 
 
     const handleAccept = async (item) => {
@@ -342,7 +386,7 @@ const TableConsultation = ({ consultations = [], title, loading }) => {
                                     <td className="py-4 px-4">{getStudentName(item.student_id)}</td>
                                     <td className="py-4 px-4">{item.service}</td>
                                     <td className="py-4 px-4">{formatDate(item.counseling_date)}</td>
-                                    <td className="py-4 px-4">{item.time}</td>
+                                    <td className="py-4 px-4">{getFormattedTimeRange(item.session_id)}</td>
                                     <td className="py-4 px-4 flex gap-2">
                                         <button
                                             className="text-secondary hover:text-yellow-500 bg-yellow-500 bg-opacity-20 hover:bg-yellow-700 hover:bg-opacity-20 p-2 rounded-lg"
@@ -370,10 +414,10 @@ const TableConsultation = ({ consultations = [], title, loading }) => {
                                                 <HiCalendarDays size={24} />
                                             </button>
                                         )}
-                                        {(item.counseling_status_id === 2) && (
+                                         {isCounselingTime(item.counseling_date, item.session_id) && (
                                             <button
                                                 className="text-cyan-500 bg-cyan-500 rounded-lg hover:text-cyan-700 hover:bg-cyan-700 hover:bg-opacity-20 p-2 bg-opacity-20"
-                                                title="Schedule"
+                                                title="Complete Counseling"
                                                 onClick={() => handleDone(item)}
                                             >
                                                 <IoCheckmarkDone size={24} />
@@ -402,7 +446,7 @@ const TableConsultation = ({ consultations = [], title, loading }) => {
                                 <div className="text-2xl">
                                     <PiClockCountdownLight />
                                 </div>
-                                <h2 className="font-semibold text-[16px]">{selectedData.time}</h2>
+                                <h2 className="font-semibold text-[16px]">{getFormattedTimeRange(selectedData.session_id)}</h2>
                             </div>
                             <hr className="border-textPrimary border-1 w-4 rotate-90" />
                             <div className="flex gap-2 text-textPrimary">
