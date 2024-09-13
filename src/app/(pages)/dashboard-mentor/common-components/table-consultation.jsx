@@ -231,25 +231,29 @@ const TableConsultation = ({ consultations = [], title, loading }) => {
 
 
     const handleReschedule = async (item) => {
+       const sessions = await fetchSessions();
+    
+        const sessionOptions = sessions.map(
+            (session) =>
+                `<option value="${session.id}"> (${session.start_time} - ${session.end_time})</option>`
+        );
+    
         const { value: formValues } = await Swal.fire({
             title: "Reschedule Counseling",
             html: `
                 <div style="width:400px;">
                     <div style="text-align: left; margin-bottom: 10px;">
-                        <label for="swal-input1" style="display: block; font-weight: bold;">New Date:</label>
+                        <label for="swal-input1" style="display: block; font-weight: bold;">Masukkan Tanggal Baru:</label>
                         <input style="margin-left :0; margin-right:0; width:450px;" type="date" id="swal-input1" class="swal2-input" placeholder="Enter new date">
                     </div>
                     <div style="width:450px; text-align: left; margin-bottom: 10px;">
-                        <label for="timepicker" style="display: block; font-weight: bold;">New Time:</label>
-                        <select id="timepicker" class="swal2-input" style="width: 100%;">
-                            <option value="08.00 - 09.00">08.00 - 09.00</option>
-                            <option value="10.00 - 11.00">10.00 - 11.00</option>
-                            <option value="12.00 - 13.00">12.00 - 13.00</option>
-                            <option value="14.00 - 15.00">14.00 - 15.00</option>
+                        <label for="sessionpicker" style="display: block; font-weight: bold;">Masukkan Waktu Baru:</label>
+                        <select id="sessionpicker" class="swal2-input" style="width: 100%;">
+                            ${sessionOptions.join('')}
                         </select>
                     </div>
                     <div style="text-align: left;">
-                        <label for="swal-input3" style="display: block; font-weight: bold;">New Place:</label>
+                        <label for="swal-input3" style="display: block; font-weight: bold;">Masukkan Tempat Baru:</label>
                         <input style="margin-left :0; margin-right:0; width:450px;" type="text" id="swal-input3" class="swal2-input" placeholder="Enter new place">
                     </div>
                 </div>`,
@@ -257,7 +261,7 @@ const TableConsultation = ({ consultations = [], title, loading }) => {
             preConfirm: () => {
                 return {
                     date: document.getElementById('swal-input1').value,
-                    time: document.getElementById('timepicker').value,
+                    session_id: document.getElementById('sessionpicker').value,
                     place: document.getElementById('swal-input3').value,
                 };
             },
@@ -265,18 +269,16 @@ const TableConsultation = ({ consultations = [], title, loading }) => {
             confirmButtonText: "Reschedule",
             cancelButtonText: "Cancel",
         });
-
+    
         if (formValues) {
             try {
-                console.log("Rescheduling with values:", formValues);
-
                 const response = await rescheduleCounseling({
                     counseling_id: item.id,
                     date: formValues.date,
-                    time: formValues.time,
+                    session_id: formValues.session_id,
                     place: formValues.place,
                 });
-
+    
                 if (response.message === 'Data Counseling berhasil diubah') {
                     Swal.fire({
                         title: 'Berhasil!',
@@ -287,21 +289,6 @@ const TableConsultation = ({ consultations = [], title, loading }) => {
                             window.location.reload();
                         }
                     });
-                    console.log('Rescheduled Counseling Data:', response.data);
-                } else if (response.message === 'Tanggal dan waktu konseling tidak tersedia') {
-                    Swal.fire({
-                        title: 'Peringatan!',
-                        text: 'Tanggal dan waktu konseling tidak tersedia',
-                        icon: 'warning',
-                        confirmButtonText: 'Oke'
-                    });
-                } else if (response.message === 'Tanggal konseling tidak boleh kurang dari hari ini') {
-                    Swal.fire({
-                        title: 'Peringatan!',
-                        text: 'Tanggal konseling tidak boleh kurang dari hari ini',
-                        icon: 'warning',
-                        confirmButtonText: 'Oke'
-                    });
                 } else {
                     Swal.fire({
                         title: 'Gagal!',
@@ -311,10 +298,9 @@ const TableConsultation = ({ consultations = [], title, loading }) => {
                     });
                 }
             } catch (error) {
-                const errorMessage = error.message || 'Terjadi kesalahan saat mereschedule konsultasi';
                 Swal.fire({
                     title: 'Gagal!',
-                    text: errorMessage,
+                    text: error.message || 'Terjadi kesalahan saat mereschedule konsultasi',
                     icon: 'error',
                     confirmButtonText: 'Oke',
                     willClose: () => {

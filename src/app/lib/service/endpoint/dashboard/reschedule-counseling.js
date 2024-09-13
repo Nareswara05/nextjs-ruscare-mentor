@@ -1,10 +1,10 @@
 import instance from "../../instance/instance";
 
-export default async function rescheduleCounseling({date, time, place, counseling_id}) {
+export default async function rescheduleCounseling({date, session_id, place, counseling_id}) {
     try {
         const response = await instance.post(`/counseling/status/reschedule/${counseling_id}`,{
             counseling_date : date,
-            time : time,
+            session_id : session_id,
             place : place,
         });
         console.log("Respons API:", response.data);
